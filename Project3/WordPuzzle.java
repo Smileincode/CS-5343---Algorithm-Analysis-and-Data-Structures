@@ -31,6 +31,7 @@ public class WordPuzzle {
                         H.insert(str.substring(0, i), false);
                     }
                 }
+                if (str.length() > maxNumOfChar) maxNumOfChar = str.length();
                 H.insert(str, true);
             }
             bf.close();
@@ -158,7 +159,7 @@ public class WordPuzzle {
         if (H.contains(res) && H.isWord(H.findPos(res))) {
             System.out.println("(" + p + ", " + q + ") --> (" + x + ", " + y + ") " + res);
             return false;
-        } else if (!H.contains(res)) {
+        } else if ((!H.contains(res)) || res.length() > maxNumOfChar) {
             return false;
         } else {
             return true;
@@ -170,13 +171,15 @@ public class WordPuzzle {
         if (H.contains(res) && H.isWord(H.findPos(res))) {
             System.out.println("(" + p + ", " + q + ") --> (" + x + ", " + y + ") " + res);
             return false;
+        } else if (res.length() > maxNumOfChar) {
+            return false;
         } else {
             return true;
         }
     }
 
     static char[][] grid;
-    static int rowsOfGrid, columnsOfGrid, enhanceOrNot = -1;
+    static int rowsOfGrid, columnsOfGrid, enhanceOrNot = -1, maxNumOfChar = 0;
     static MyHashTable<String> H = new MyHashTable<>( );
     static String res;
 }
